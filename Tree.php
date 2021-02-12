@@ -125,6 +125,7 @@ class Tree
                         array_push($node['children'], $element);
                         break;
                     case 'del':
+                        //prepare children array with new parent_id
                         $children = ($this->changeParents($node['children'], $node['parent_id']));
                         unset($arr[$key]);
                         $this->count--;
@@ -135,7 +136,6 @@ class Tree
                         }
                         break;
                     case 'limb':
-                        echo 'Limb:'.PHP_EOL;
                         $test[] = $node;
                         $this->showNodeField($test, 'name', 0);
                         break;
@@ -155,7 +155,9 @@ class Tree
      */
     private function searchParentNode($id, $tree, $name = null){
         foreach ($tree as $key => $node) {
+            //if have children - search $id
             if (isset($node['children']) && count($node['children']) > 0){
+                //when found - return data
                 if ($this->checkChildren($node['children'], $id)) {
                     if ($name == null) {
                         return $node;
